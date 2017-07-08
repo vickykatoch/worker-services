@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Web Workers Demo</title>
+    <script src="node_modules/systemjs/dist/system-production.js"></script>
+</head>
+
+<body>
+
+    <script>
+        var worker = new Worker('./app/socket-loader.js');
+        worker.postMessage({ type: 'INIT_WORKER', payload : 'load dependencies'});
+        worker.addEventListener('message', function(e) {
+            console.log(e.data);
+            worker.postMessage({ type: 'SOCKET_CONNECT', payload : 'Subsequent Message'});
+        })
+    </script>
+</body>
+
+</html>
